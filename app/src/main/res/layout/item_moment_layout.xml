@@ -42,6 +42,13 @@
             android:orientation="vertical"
             app:layout_constraintStart_toEndOf="@id/iv_head" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_line2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/nav_dimen_size_24dp" />
+
         <TextView
             android:id="@+id/tv_name"
             text="@{momentItemVM.name}"
@@ -63,11 +70,26 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/nav_dimen_size_12dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="@dimen/nav_dimen_size_24dp"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@id/guide_line1"
             app:layout_constraintTop_toBottomOf="@id/tv_name"
             tools:text="我只要把额头遮住你们就看不到我的大脑门儿了，我只要把额头遮住你们就看不到我的大脑门儿了哈哈哈哈哈哈" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_images"
+            isGone="@{momentItemVM.imageItems.size() == 0}"
+            itemBinding="@{momentItemVM.momentImageBind}"
+            items="@{momentItemVM.imageItems}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/nav_dimen_size_12dp"
+            android:layout_marginTop="@dimen/nav_dimen_size_12dp"
+            android:overScrollMode="never"
+            app:layoutManager="@{momentItemVM.glManager}"
+            app:layout_constraintStart_toEndOf="@id/guide_line1"
+            app:layout_constraintTop_toBottomOf="@id/tv_content" />
 
         <TextView
             android:id="@+id/tv_location"
@@ -79,7 +101,7 @@
             android:gravity="center"
             android:textColor="@color/color_1E90FF"
             app:layout_constraintStart_toEndOf="@id/guide_line1"
-            app:layout_constraintTop_toBottomOf="@id/tv_content"
+            app:layout_constraintTop_toBottomOf="@id/rv_images"
             tools:text="北京·天安门" />
 
         <TextView
@@ -103,5 +125,21 @@
             android:src="@drawable/icon_more"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_location" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_comments"
+            isGone="@{momentItemVM.commentItems.size() == 0}"
+            itemBinding="@{momentItemVM.momentCommentBind}"
+            items="@{momentItemVM.commentItems}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/nav_dimen_size_12dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/color_F9FAFE"
+            android:overScrollMode="never"
+            android:padding="8dp"
+            app:layoutManager=".viewmodel.MomentLinearLayoutManager"
+            app:layout_constraintStart_toEndOf="@id/guide_line1"
+            app:layout_constraintTop_toBottomOf="@id/tv_date" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="momentImageVM"
+            type="com.snail.wechatmoments.viewmodel.MomentImageViewModel" />
+
+        <import type="com.snail.common.Constants.BitmapTransform" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="2dp">
+
+        <ImageView
+            android:id="@+id/iv_head"
+            errorThumbnail="@{@drawable/icon_default_head}"
+            imageUrlThumbnail="@{momentImageVM.thumbnailUrl}"
+            onClick="@{momentImageVM::viewLargeImage}"
+            placeHolderThumbnail="@{@drawable/icon_default_head}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_launcher" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

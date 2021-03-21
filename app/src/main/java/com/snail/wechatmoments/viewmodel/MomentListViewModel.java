@@ -3,6 +3,7 @@ package com.snail.wechatmoments.viewmodel;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -85,7 +86,7 @@ public class MomentListViewModel extends RefreshListViewModel implements View.On
     };
     private Dialog mCameraDialog;
     //已选的图片
-    private ArrayList<String> selected;
+    private ArrayList<String> selected = new ArrayList<>();
 
     public MomentListViewModel(Context context) {
         super(context);
@@ -93,13 +94,6 @@ public class MomentListViewModel extends RefreshListViewModel implements View.On
         decoration.setDrawable(ResourceUtil.getDrawable(R.drawable.item_divider));
         itemDecoration.set(decoration);
         requestServer();
-    }
-
-    public ArrayList<String> getSelected() {
-        if (selected == null) {
-            return new ArrayList<>();
-        }
-        return selected;
     }
 
     public void setSelected(ArrayList<String> selected) {
@@ -156,13 +150,26 @@ public class MomentListViewModel extends RefreshListViewModel implements View.On
             MomentHeaderViewModel headerViewModel = new MomentHeaderViewModel(context);
             items.add(headerViewModel);
         }
-        for (MomentBean momentBean : mData) {
+        for (int i = 0; i < mData.size(); i++) {
+            MomentBean momentBean = mData.get(i);
             if (momentBean != null) {
-                MomentItemViewModel itemViewModel = new MomentItemViewModel(context);
+                selected = getSelected(i + 1);
+                MomentItemViewModel itemViewModel = new MomentItemViewModel(context, selected);
                 itemViewModel.name.set(momentBean.getName());
                 items.add(itemViewModel);
             }
         }
+    }
+
+    private ArrayList<String> getSelected(int size) {
+        selected.clear();
+        if (size > 9) {
+            size = 9;
+        }
+        for (int i = 0; i < size; i++) {
+            selected.add("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2Fa%2F59bb6e64148ac.jpg%3Fdown&refer=http%3A%2F%2Fpic1.win4000.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1618897034&t=91160ec73de596be3529da0b9a5626d1");
+        }
+        return selected;
     }
 
     @Override
@@ -170,7 +177,7 @@ public class MomentListViewModel extends RefreshListViewModel implements View.On
         super.requestServer();
 
         for (int i = 0; i < 10; i++) {
-            mData.add(new MomentBean("张三" + (mData.size() + 1)));
+            mData.add(new MomentBean("Snail" + (mData.size() + 1)));
         }
         refreshing.set(false);
         createViewModel();
