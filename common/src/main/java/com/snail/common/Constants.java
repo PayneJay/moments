@@ -7,6 +7,7 @@ import com.snail.common.utils.ToastUtil;
 
 
 public class Constants {
+    public static final int REQUEST_CODE_CHOOSE = 200;
     public static Application sApplication;
 
     public static final String TAG = "***com.minerva***";
