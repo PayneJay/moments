@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="headerVM"
+            type="com.snail.wechatmoments.viewmodel.MomentHeaderViewModel" />
+
+        <import type="com.snail.wechatmoments.R" />
+
+        <import type="com.snail.common.Constants.BitmapTransform" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_bg"
+            errorThumbnail="@{@drawable/pic_background}"
+            imageUrlThumbnail="@{headerVM.bgImgUrl}"
+            placeHolderThumbnail="@{@drawable/pic_background}"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/pic_background" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_line1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="220dp" />
+
+        <TextView
+            text="@{headerVM.name}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/nav_dimen_size_15dp"
+            android:layout_marginEnd="@dimen/nav_dimen_size_10dp"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/guide_line1"
+            app:layout_constraintEnd_toStartOf="@id/img_head"
+            tools:text="在路上" />
+
+        <ImageView
+            android:id="@+id/img_head"
+            errorThumbnail="@{@drawable/icon_default_head}"
+            imageUrlThumbnail="@{headerVM.headImgUrl}"
+            placeHolderThumbnail="@{@drawable/icon_default_head}"
+            thumbnailCorners="@{6}"
+            thumbnailType="@{BitmapTransform.ROUNDED}"
+            android:layout_width="@dimen/nav_dimen_size_60dp"
+            android:layout_height="@dimen/nav_dimen_size_60dp"
+            android:layout_marginEnd="@dimen/nav_dimen_size_12dp"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="@id/guide_line1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guide_line1"
+            tools:src="@drawable/ic_launcher" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

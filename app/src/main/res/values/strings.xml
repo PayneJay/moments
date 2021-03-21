@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">WeChatMoments</string>
+    <string name="no_more_data">哥，这回可真没了～</string>
+    <string name="no_data">暂无好友动态</string>
+    <string name="network_error">网络错误</string>
+    <string name="moments">朋友圈</string>
+</resources>
