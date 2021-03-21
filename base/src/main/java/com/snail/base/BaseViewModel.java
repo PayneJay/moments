@@ -45,6 +45,10 @@ public abstract class BaseViewModel extends BaseObservable implements IViewModel
 
     @Override
     public void onDetach() {
+        if (mHandler != null) {
+            mHandler.removeCallbacks(null);
+            mHandler = null;
+        }
     }
 
     @Override

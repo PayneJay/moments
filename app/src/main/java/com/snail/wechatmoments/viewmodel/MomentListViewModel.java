@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,15 +79,16 @@ public class MomentListViewModel extends RefreshListViewModel implements View.On
         }
     };
 
-    private final List<MomentBean> mData = new ArrayList<>();
-
     public SwipeRefreshLayout.OnRefreshListener onRefreshListener = () -> {
         refreshing.set(true);
+        start = end = 0;
         requestServer();
     };
+    private final List<MomentBean> mData = new ArrayList<>();
     private Dialog mCameraDialog;
     //已选的图片
     private ArrayList<String> selected = new ArrayList<>();
+    private int start, end;
 
     public MomentListViewModel(Context context) {
         super(context);
@@ -139,33 +141,32 @@ public class MomentListViewModel extends RefreshListViewModel implements View.On
      * 加载更多
      */
     public void loadMore() {
-        requestServer();
+        createViewModel();
     }
 
     @Override
     protected void createViewModel() {
-        super.createViewModel();
-
         if (items.isEmpty()) {
             MomentHeaderViewModel headerViewModel = new MomentHeaderViewModel(context);
             items.add(headerViewModel);
         }
 
-        for (int i = 0; i < mData.size(); i++) {
+        end = Math.min(mData.size() - start, 5);
+        Log.d("--createViewModel--", "mData.size():" + mData.size() + "，start: " + start + "，end: " + end);
+        for (int i = start; i < start + end; i++) {
             MomentBean momentBean = mData.get(i);
-            if (momentBean != null && !TextUtils.isEmpty(momentBean.getContent())) {
-                MomentItemViewModel itemViewModel = new MomentItemViewModel(context);
-                MomentBean.SenderBean sender = momentBean.getSender();
-                if (sender != null) {
-                    itemViewModel.name.set(sender.getNick());
-                    itemViewModel.headUrl.set(sender.getAvatar());
-                }
-                itemViewModel.contentDesc.set(momentBean.getContent());
-                itemViewModel.setImages(momentBean.getImages());
-                itemViewModel.setComments(momentBean.getComments());
-                items.add(itemViewModel);
+            MomentItemViewModel itemViewModel = new MomentItemViewModel(context);
+            MomentBean.SenderBean sender = momentBean.getSender();
+            if (sender != null) {
+                itemViewModel.name.set(sender.getNick());
+                itemViewModel.headUrl.set(sender.getAvatar());
             }
+            itemViewModel.contentDesc.set(momentBean.getContent());
+            itemViewModel.setImages(momentBean.getImages());
+            itemViewModel.setComments(momentBean.getComments());
+            items.add(itemViewModel);
         }
+        start += end;
     }
 
     @Override
@@ -174,8 +175,17 @@ public class MomentListViewModel extends RefreshListViewModel implements View.On
         MomentModel.getInstance().getTweets(object -> {
             refreshing.set(false);
             if (object instanceof List) {
+                if (start == 0) {
+                    mData.clear();
+                }
+
                 List<MomentBean> momentBeans = (List) object;
-                mData.addAll(momentBeans);
+                for (MomentBean momentBean : momentBeans) {
+                    if (momentBean != null && (!TextUtils.isEmpty(momentBean.getContent())
+                            || momentBean.getImages().size() > 0)) {
+                        mData.add(momentBean);
+                    }
+                }
             }
             //发消息到主线程更新UI
             mHandler.post(this::createViewModel);

@@ -12,6 +12,8 @@
         <import type="com.snail.common.Constants.BitmapTransform" />
 
         <import type="com.snail.wechatmoments.R" />
+
+        <import type="android.text.TextUtils" />
     </data>
 
     <RelativeLayout
@@ -56,6 +58,7 @@
 
             <TextView
                 android:id="@+id/tv_content"
+                isGone="@{TextUtils.isEmpty(momentItemVM.contentDesc)}"
                 text="@{momentItemVM.contentDesc}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
