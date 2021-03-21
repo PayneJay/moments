@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,9 +11,31 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/nav_dimen_size_6dp">
 
+        <TextView
+            android:id="@+id/tv_sender_name"
+            onClick="@{commentVM::viewSender}"
+            text="@{commentVM.sender}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/color_1E90FF"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="发送者" />
+
+        <TextView
+            text="@{commentVM.content}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toEndOf="@id/tv_sender_name"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="：评论内容" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

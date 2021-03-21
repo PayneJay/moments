@@ -68,6 +68,13 @@ public class MomentItemViewModel extends BaseViewModel {
         super(context);
         setViewType(Constants.RecyclerItemType.MOMENT_COMMON_ITEM_TYPE);
         setImages(images);
+        setComments();
+    }
+
+    private void setComments() {
+        for (int i = 0; i < 3; i++) {
+            commentItems.add(new MomentCommentViewModel(context));
+        }
     }
 
     private void setImages(List<String> images) {

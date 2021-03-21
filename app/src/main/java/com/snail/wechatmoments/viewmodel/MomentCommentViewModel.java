@@ -11,11 +11,18 @@ import com.snail.common.Constants;
  * 评论ViewModel
  */
 public class MomentCommentViewModel extends BaseViewModel {
-    public ObservableField<String> comment = new ObservableField<>("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2Fa%2F59bb6e64148ac.jpg%3Fdown&refer=http%3A%2F%2Fpic1.win4000.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1618897034&t=91160ec73de596be3529da0b9a5626d1");
+    public ObservableField<String> sender = new ObservableField<>("张三");
+    public ObservableField<String> content = new ObservableField<>("：Unlike many proprietary big data processing platform different," +
+            " Spark is built on a unified abstract RDD, making it possible to deal with different ways consistent with large data processing scenarios," +
+            " including MapReduce, Streaming, SQL, Machine Learning and Graph so on. To understand the Spark, you have to understand the RDD. ");
 
     public MomentCommentViewModel(Context context) {
         super(context);
         setViewType(Constants.RecyclerItemType.MOMENT_COMMENT_ITEM_TYPE);
+    }
+
+    public void viewSender() {
+        Constants.showToast();
     }
 
 }
