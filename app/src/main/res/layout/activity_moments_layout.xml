@@ -31,6 +31,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 itemBinding="@{momentVM.momentItemBind}"
+                itemDecoration="@{momentVM.itemDecoration}"
                 items="@{momentVM.items}"
                 loadMore="@{momentVM::loadMore}"
                 onRecyclerScrollListener="@{momentVM.onScrollListener}"

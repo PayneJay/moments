@@ -14,7 +14,9 @@ import android.widget.LinearLayout;
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableInt;
 import androidx.databinding.ObservableList;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -24,6 +26,7 @@ import com.snail.base.BaseActivity;
 import com.snail.base.BaseViewModel;
 import com.snail.common.Constants;
 import com.snail.common.utils.ResourceUtil;
+import com.snail.common.widget.MomentDividerItemDecoration;
 import com.snail.wechatmoments.BR;
 import com.snail.wechatmoments.R;
 import com.snail.wechatmoments.model.MomentBean;
@@ -39,12 +42,12 @@ import me.tatarka.bindingcollectionadapter2.OnItemBind;
 public class MomentListViewModel extends RefreshListViewModel implements View.OnClickListener {
     public ObservableField<String> title = new ObservableField<>();
     public ObservableBoolean firstItemVisible = new ObservableBoolean(true);
+    public ObservableField<RecyclerView.ItemDecoration> itemDecoration = new ObservableField<>();
     public RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
             int position = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-            setItemPosition(position);
             if (position > 0) {
                 title.set(ResourceUtil.getString(R.string.moments));
                 firstItemVisible.set(false);
@@ -57,6 +60,7 @@ public class MomentListViewModel extends RefreshListViewModel implements View.On
 
     public ObservableList<BaseViewModel> items = new ObservableArrayList<>();
     public OnItemBind<BaseViewModel> momentItemBind = (itemBinding, position, item) -> {
+        setItemPosition(position);
         switch (item.getViewType()) {
             case Constants.RecyclerItemType.MOMENT_COMMON_ITEM_TYPE:
                 itemBinding.set(BR.momentItemVM, R.layout.item_moment_layout);
@@ -85,6 +89,9 @@ public class MomentListViewModel extends RefreshListViewModel implements View.On
 
     public MomentListViewModel(Context context) {
         super(context);
+        MomentDividerItemDecoration decoration = new MomentDividerItemDecoration(context, DividerItemDecoration.VERTICAL);
+        decoration.setDrawable(ResourceUtil.getDrawable(R.drawable.item_divider));
+        itemDecoration.set(decoration);
         requestServer();
     }
 
@@ -152,7 +159,7 @@ public class MomentListViewModel extends RefreshListViewModel implements View.On
         for (MomentBean momentBean : mData) {
             if (momentBean != null) {
                 MomentItemViewModel itemViewModel = new MomentItemViewModel(context);
-                itemViewModel.content.set(momentBean.getName());
+                itemViewModel.name.set(momentBean.getName());
                 items.add(itemViewModel);
             }
         }
@@ -163,7 +170,7 @@ public class MomentListViewModel extends RefreshListViewModel implements View.On
         super.requestServer();
 
         for (int i = 0; i < 10; i++) {
-            mData.add(new MomentBean("这是第" + (mData.size() + 1) + "个条目"));
+            mData.add(new MomentBean("张三" + (mData.size() + 1)));
         }
         refreshing.set(false);
         createViewModel();

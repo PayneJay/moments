@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import androidx.annotation.StringRes;
+import androidx.core.content.ContextCompat;
 
 import com.snail.common.Constants;
 
@@ -35,7 +36,7 @@ public class ResourceUtil {
      */
     public static Drawable getDrawable(int id) {
         try {
-            return Constants.sApplication.getResources().getDrawable(id);
+            return ContextCompat.getDrawable(Constants.sApplication, id);
         } catch (Exception e) {
             Log.e(Constants.TAG, e.getMessage());
             return null;

@@ -40,7 +40,16 @@ public class RecyclerViewBindings {
 
     @BindingAdapter("onRecyclerScrollListener")
     public static void addOnScrollListener(RecyclerView view, RecyclerView.OnScrollListener listener) {
-        view.addOnScrollListener(listener);
+        if (listener != null) {
+            view.addOnScrollListener(listener);
+        }
+    }
+
+    @BindingAdapter(value = {"itemDecoration", "index"}, requireAll = false)
+    public static void addItemDecoration(RecyclerView view, RecyclerView.ItemDecoration itemDecoration, int index) {
+        if (itemDecoration != null) {
+            view.addItemDecoration(itemDecoration);
+        }
     }
 
     public interface OnItemBoundHandler<T> {
