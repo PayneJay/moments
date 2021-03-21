@@ -6,6 +6,8 @@ import androidx.databinding.ObservableField;
 
 import com.snail.base.BaseViewModel;
 import com.snail.common.Constants;
+import com.snail.wechatmoments.model.ProfileBean;
+import com.snail.wechatmoments.model.ProfileModel;
 
 /**
  * 朋友圈头部ViewModel
@@ -18,5 +20,18 @@ public class MomentHeaderViewModel extends BaseViewModel {
     public MomentHeaderViewModel(Context context) {
         super(context);
         setViewType(Constants.RecyclerItemType.MOMENT_HEADER_ITEM_TYPE);
+
+        requestProfile();
+    }
+
+    private void requestProfile() {
+        ProfileModel.getInstance().getProfile(object -> {
+            if (object instanceof ProfileBean) {
+                ProfileBean profileBean = (ProfileBean) object;
+                bgImgUrl.set(profileBean.getProfileimage());
+                headImgUrl.set(profileBean.getAvatar());
+                name.set(profileBean.getNick());
+            }
+        });
     }
 }

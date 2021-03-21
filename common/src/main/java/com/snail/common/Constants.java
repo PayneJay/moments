@@ -8,6 +8,7 @@ import com.snail.common.utils.ToastUtil;
 
 public class Constants {
     public static final int REQUEST_CODE_CHOOSE = 200;
+    public static final String HOST = "http://thoughtworks-ios.herokuapp.com";
     public static Application sApplication;
 
     public static final String TAG = "***com.minerva***";
@@ -58,11 +59,24 @@ public class Constants {
 
     }
 
+    /**
+     * 页面状态
+     */
     public interface PageStatus {
         int NO_DATA = 404;    //无数据
 
         int NETWORK_EXCEPTION = 500;//网络异常
 
+    }
+
+    /**
+     * 网络请求方式
+     */
+    public interface RequestMethod {
+        String METHOD_GET = "get";
+        String METHOD_POST = "post";
+        String METHOD_PUT = "put";
+        String METHOD_DELETE = "delete";
     }
 
 }

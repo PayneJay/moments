@@ -1,8 +1,6 @@
 package com.snail.wechatmoments.viewmodel;
 
 import android.content.Context;
-import android.text.TextUtils;
-import android.util.Log;
 
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableField;
@@ -13,6 +11,7 @@ import com.snail.base.BaseViewModel;
 import com.snail.common.Constants;
 import com.snail.wechatmoments.BR;
 import com.snail.wechatmoments.R;
+import com.snail.wechatmoments.model.MomentBean;
 
 import java.util.List;
 
@@ -64,24 +63,38 @@ public class MomentItemViewModel extends BaseViewModel {
         }
     };
 
-    public MomentItemViewModel(Context context, List<String> images) {
+    public MomentItemViewModel(Context context) {
         super(context);
         setViewType(Constants.RecyclerItemType.MOMENT_COMMON_ITEM_TYPE);
-        setImages(images);
-        setComments();
     }
 
-    private void setComments() {
-        for (int i = 0; i < 3; i++) {
-            commentItems.add(new MomentCommentViewModel(context));
+    /**
+     * 设置评论列表
+     *
+     * @param comments
+     */
+    public void setComments(List<MomentBean.CommentsBean> comments) {
+        for (MomentBean.CommentsBean comment : comments) {
+            if (comment != null) {
+                MomentCommentViewModel commentViewModel = new MomentCommentViewModel(context);
+                commentViewModel.sender.set(comment.getSender().getNick());
+                commentViewModel.senderAvatar.set(comment.getSender().getAvatar());
+                commentViewModel.content.set("：" + comment.getContent());
+                commentItems.add(commentViewModel);
+            }
         }
     }
 
-    private void setImages(List<String> images) {
-        for (String imgUrl : images) {
-            if (!TextUtils.isEmpty(imgUrl)) {
+    /**
+     * 设置图片列表
+     *
+     * @param images
+     */
+    public void setImages(List<MomentBean.ImagesBean> images) {
+        for (MomentBean.ImagesBean image : images) {
+            if (image != null) {
                 MomentImageViewModel imageViewModel = new MomentImageViewModel(context);
-                imageViewModel.thumbnailUrl.set(imgUrl);
+                imageViewModel.thumbnailUrl.set(image.getUrl());
                 this.imageItems.add(imageViewModel);
             }
         }

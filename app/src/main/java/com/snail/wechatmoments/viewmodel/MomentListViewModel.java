@@ -3,8 +3,8 @@ package com.snail.wechatmoments.viewmodel;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
-import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
-import androidx.databinding.ObservableInt;
 import androidx.databinding.ObservableList;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,6 +30,7 @@ import com.snail.common.widget.MomentDividerItemDecoration;
 import com.snail.wechatmoments.BR;
 import com.snail.wechatmoments.R;
 import com.snail.wechatmoments.model.MomentBean;
+import com.snail.wechatmoments.model.MomentModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,37 +150,36 @@ public class MomentListViewModel extends RefreshListViewModel implements View.On
             MomentHeaderViewModel headerViewModel = new MomentHeaderViewModel(context);
             items.add(headerViewModel);
         }
+
         for (int i = 0; i < mData.size(); i++) {
             MomentBean momentBean = mData.get(i);
-            if (momentBean != null) {
-                selected = getSelected(i + 1);
-                MomentItemViewModel itemViewModel = new MomentItemViewModel(context, selected);
-                itemViewModel.name.set(momentBean.getName());
+            if (momentBean != null && !TextUtils.isEmpty(momentBean.getContent())) {
+                MomentItemViewModel itemViewModel = new MomentItemViewModel(context);
+                MomentBean.SenderBean sender = momentBean.getSender();
+                if (sender != null) {
+                    itemViewModel.name.set(sender.getNick());
+                    itemViewModel.headUrl.set(sender.getAvatar());
+                }
+                itemViewModel.contentDesc.set(momentBean.getContent());
+                itemViewModel.setImages(momentBean.getImages());
+                itemViewModel.setComments(momentBean.getComments());
                 items.add(itemViewModel);
             }
         }
     }
 
-    private ArrayList<String> getSelected(int size) {
-        selected.clear();
-        if (size > 9) {
-            size = 9;
-        }
-        for (int i = 0; i < size; i++) {
-            selected.add("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2Fa%2F59bb6e64148ac.jpg%3Fdown&refer=http%3A%2F%2Fpic1.win4000.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1618897034&t=91160ec73de596be3529da0b9a5626d1");
-        }
-        return selected;
-    }
-
     @Override
     protected void requestServer() {
         super.requestServer();
-
-        for (int i = 0; i < 10; i++) {
-            mData.add(new MomentBean("Snail" + (mData.size() + 1)));
-        }
-        refreshing.set(false);
-        createViewModel();
+        MomentModel.getInstance().getTweets(object -> {
+            refreshing.set(false);
+            if (object instanceof List) {
+                List<MomentBean> momentBeans = (List) object;
+                mData.addAll(momentBeans);
+            }
+            //发消息到主线程更新UI
+            mHandler.post(this::createViewModel);
+        });
     }
 
     @SuppressLint("NonConstantResourceId")

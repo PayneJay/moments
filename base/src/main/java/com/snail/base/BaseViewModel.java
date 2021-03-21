@@ -2,6 +2,8 @@ package com.snail.base;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 
 import androidx.databinding.BaseObservable;
@@ -10,9 +12,11 @@ public abstract class BaseViewModel extends BaseObservable implements IViewModel
     private int mViewType = -1;
     private int itemPosition = -1;
     protected Context context;
+    protected Handler mHandler;
 
     public BaseViewModel(Context context) {
         this.context = context;
+        mHandler = new Handler(Looper.getMainLooper());
     }
 
     public int getViewType() {
