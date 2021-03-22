@@ -19,18 +19,19 @@
 
         <ImageView
             android:id="@+id/iv_head"
-            errorThumbnail="@{@drawable/icon_default_head}"
+            errorThumbnail="@{@drawable/pic_background}"
             imageUrlThumbnail="@{momentImageVM.thumbnailUrl}"
             onClick="@{momentImageVM::viewLargeImage}"
-            placeHolderThumbnail="@{@drawable/icon_default_head}"
+            placeHolderThumbnail="@{@drawable/pic_background}"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:maxWidth="120dp"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_launcher" />
+            tools:src="@drawable/pic_background" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

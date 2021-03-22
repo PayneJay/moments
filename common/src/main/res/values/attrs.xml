@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ExpandTextView">
-        <attr name="showLines" format="integer"/>
+        <attr name="showLines" format="integer" />
     </declare-styleable>
 
+    <declare-styleable name="RatioImageView">
+        <attr name="ratio" format="float" />
+    </declare-styleable>
 
+    <declare-styleable name="NineGridLayout">
+        <attr name="sapcing" format="dimension" />
+        <attr name="oneImageWidth" format="dimension" />
+        <attr name="oneImageHeight" format="dimension" />
+        <attr name="image_ratio" format="float" />
+    </declare-styleable>
 </resources>

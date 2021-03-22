@@ -78,6 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/nav_dimen_size_12dp"
+                android:layout_marginEnd="@dimen/nav_dimen_size_25dp"
                 android:overScrollMode="never"
                 app:layoutManager="@{momentItemVM.glManager}"
                 app:layout_constraintStart_toEndOf="@id/guide_line1"

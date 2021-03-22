@@ -88,7 +88,7 @@ public class MomentItemViewModel extends BaseViewModel {
     public void setImages(List<MomentBean.ImagesBean> images) {
         for (MomentBean.ImagesBean image : images) {
             if (image != null) {
-                MomentImageViewModel imageViewModel = new MomentImageViewModel(context);
+                MomentImageViewModel imageViewModel = new MomentImageViewModel(context, images.size() > 1);
                 imageViewModel.thumbnailUrl.set(image.getUrl());
                 this.imageItems.add(imageViewModel);
             }
@@ -101,7 +101,9 @@ public class MomentItemViewModel extends BaseViewModel {
 
     private int getSpanCount() {
         int size = imageItems.size();
-        if (size == 4) {
+        if (size == 1) {
+            return 1;
+        } else if (size == 4) {
             return 2;
         } else {
             return 3;

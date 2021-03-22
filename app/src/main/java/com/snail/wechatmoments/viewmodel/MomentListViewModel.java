@@ -95,6 +95,7 @@ public class MomentListViewModel extends RefreshListViewModel implements View.On
         MomentDividerItemDecoration decoration = new MomentDividerItemDecoration(context, DividerItemDecoration.VERTICAL);
         decoration.setDrawable(ResourceUtil.getDrawable(R.drawable.item_divider));
         itemDecoration.set(decoration);
+        refreshing.set(true);
         requestServer();
     }
 
