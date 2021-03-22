@@ -5,7 +5,6 @@ import android.content.Context;
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableList;
-import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.snail.base.BaseViewModel;
 import com.snail.common.Constants;
@@ -33,13 +32,7 @@ public class MomentItemViewModel extends BaseViewModel {
     //时间
     public ObservableField<String> date = new ObservableField<>("2小时前");
     //图片内容
-    public ObservableList<BaseViewModel> imageItems = new ObservableArrayList<>();
-    public OnItemBind<BaseViewModel> momentImageBind = (itemBinding, position, item) -> {
-        setItemPosition(position);
-        if (item.getViewType() == Constants.RecyclerItemType.MOMENT_IMAGE_ITEM_TYPE) {
-            itemBinding.set(BR.momentImageVM, R.layout.item_moment_image_layout);
-        }
-    };
+    public ObservableList<String> imageUrls = new ObservableArrayList<>();
 
     //评论和点赞内容
     public ObservableList<BaseViewModel> commentItems = new ObservableArrayList<>();
@@ -88,25 +81,8 @@ public class MomentItemViewModel extends BaseViewModel {
     public void setImages(List<MomentBean.ImagesBean> images) {
         for (MomentBean.ImagesBean image : images) {
             if (image != null) {
-                MomentImageViewModel imageViewModel = new MomentImageViewModel(context, images.size() > 1);
-                imageViewModel.thumbnailUrl.set(image.getUrl());
-                this.imageItems.add(imageViewModel);
+                imageUrls.add(image.getUrl());
             }
-        }
-    }
-
-    public GridLayoutManager getGlManager() {
-        return new GridLayoutManager(context, getSpanCount());
-    }
-
-    private int getSpanCount() {
-        int size = imageItems.size();
-        if (size == 1) {
-            return 1;
-        } else if (size == 4) {
-            return 2;
-        } else {
-            return 3;
         }
     }
 

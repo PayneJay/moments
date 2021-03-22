@@ -38,6 +38,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.snail.common.Constants;
+import com.snail.common.widget.NineGridLayout;
 
 import java.io.File;
 import java.util.List;
@@ -414,6 +415,12 @@ public class ViewBindings {
         if (listener != null) {
             toolbar.setNavigationOnClickListener(listener);
         }
+    }
+
+    @BindingAdapter(value = {"nineGridSpace", "nineGridImgUrls"}, requireAll = false)
+    public static void setNineGridLayout(NineGridLayout nineGridLayout, float space, List<String> imgUrls) {
+        nineGridLayout.setSpacing(space);
+        nineGridLayout.setUrlList(imgUrls);
     }
 
     public interface ClickHandler {

@@ -153,7 +153,6 @@ public class MomentListViewModel extends RefreshListViewModel implements View.On
         }
 
         end = Math.min(mData.size() - start, 5);
-        Log.d("--createViewModel--", "mData.size():" + mData.size() + "，start: " + start + "，end: " + end);
         for (int i = start; i < start + end; i++) {
             MomentBean momentBean = mData.get(i);
             MomentItemViewModel itemViewModel = new MomentItemViewModel(context);

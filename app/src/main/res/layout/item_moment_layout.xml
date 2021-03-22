@@ -70,19 +70,20 @@
                 app:layout_constraintStart_toEndOf="@id/guide_line1"
                 app:layout_constraintTop_toBottomOf="@id/tv_name" />
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.snail.wechatmoments.view.MomentNineGridLayout
                 android:id="@+id/rv_images"
-                isGone="@{momentItemVM.imageItems.size() == 0}"
-                itemBinding="@{momentItemVM.momentImageBind}"
-                items="@{momentItemVM.imageItems}"
+                nineGridImgUrls="@{momentItemVM.imageUrls}"
+                nineGridSpace="@{8}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/nav_dimen_size_12dp"
                 android:layout_marginEnd="@dimen/nav_dimen_size_25dp"
                 android:overScrollMode="never"
-                app:layoutManager="@{momentItemVM.glManager}"
+                app:image_ratio="1.7"
                 app:layout_constraintStart_toEndOf="@id/guide_line1"
-                app:layout_constraintTop_toBottomOf="@id/tv_content" />
+                app:layout_constraintTop_toBottomOf="@id/tv_content"
+                app:oneImageHeight="112dp"
+                app:oneImageWidth="200dp" />
 
             <TextView
                 android:id="@+id/tv_location"
