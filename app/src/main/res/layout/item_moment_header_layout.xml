@@ -28,7 +28,7 @@
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
             android:scaleType="centerCrop"
-            app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintDimensionRatio="4:3"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/pic_background" />
 
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="220dp" />
+            app:layout_constraintGuide_begin="300dp" />
 
         <TextView
             text="@{headerVM.name}"
@@ -65,7 +65,7 @@
             android:layout_width="@dimen/nav_dimen_size_60dp"
             android:layout_height="@dimen/nav_dimen_size_60dp"
             android:layout_marginEnd="@dimen/nav_dimen_size_12dp"
-            android:scaleType="centerInside"
+            android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="@id/guide_line1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/guide_line1"

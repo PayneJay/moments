@@ -37,6 +37,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshFooter;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.snail.common.Constants;
 import com.snail.common.widget.NineGridLayout;
 
@@ -423,24 +428,33 @@ public class ViewBindings {
         nineGridLayout.setUrlList(imgUrls);
     }
 
+    @BindingAdapter(value = {"smartRefreshHeader", "smartRefreshFooter", "smartRefreshListener",
+            "smartLoadMoreListener"}, requireAll = false)
+    public static void setSmartRefreshLayout(SmartRefreshLayout refreshLayout,
+                                             RefreshHeader smartRefreshHeader,
+                                             RefreshFooter smartRefreshFooter,
+                                             OnRefreshListener smartRefreshListener,
+                                             OnLoadMoreListener smartLoadMoreListener) {
+        if (smartRefreshHeader != null) {
+            refreshLayout.setRefreshHeader(smartRefreshHeader);
+        }
+        if (smartRefreshFooter != null) {
+            refreshLayout.setRefreshFooter(smartRefreshFooter);
+        }
+        if (smartRefreshListener != null) {
+            refreshLayout.setOnRefreshListener(smartRefreshListener);
+        }
+        if (smartLoadMoreListener != null) {
+            refreshLayout.setOnLoadMoreListener(smartLoadMoreListener);
+        }
+    }
+
     public interface ClickHandler {
         void onClick();
     }
 
-    public interface SeekBarChange {
-        void onChange(int volume);
-    }
-
     public interface OnLongClickListener {
         void onItemLongClick();
-    }
-
-    public interface OnClickListener {
-        void onItemClick();
-    }
-
-    public interface OnCheckHandler {
-        void onCheck(Object Id);
     }
 
 }

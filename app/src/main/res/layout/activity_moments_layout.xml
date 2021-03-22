@@ -22,10 +22,11 @@
         android:background="@color/color_EEEEEE"
         android:fitsSystemWindows="true">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            colorSchemeColors="@{momentVM.colors}"
-            onRefreshListener="@{momentVM.onRefreshListener}"
-            refreshing="@{momentVM.refreshing}"
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            smartLoadMoreListener="@{momentVM.onLoadMoreListener}"
+            smartRefreshFooter="@{momentVM.refreshFooter}"
+            smartRefreshHeader="@{momentVM.refreshHeader}"
+            smartRefreshListener="@{momentVM.onRefreshListener}"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -33,14 +34,13 @@
                 itemBinding="@{momentVM.momentItemBind}"
                 itemDecoration="@{momentVM.itemDecoration}"
                 items="@{momentVM.items}"
-                loadMore="@{momentVM::loadMore}"
                 onRecyclerScrollListener="@{momentVM.onScrollListener}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
                 android:overScrollMode="never"
                 app:layoutManager=".viewmodel.MomentLinearLayoutManager" />
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/appBar"

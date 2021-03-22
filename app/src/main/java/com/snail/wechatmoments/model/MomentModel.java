@@ -1,21 +1,12 @@
 package com.snail.wechatmoments.model;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.reflect.TypeToken;
 import com.snail.common.network.NetworkCallback;
 import com.snail.common.network.OkHttp;
 import com.snail.wechatmoments.callback.IResponseCallback;
 
-import org.json.JSONArray;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import io.reactivex.Observer;
 
 public class MomentModel {
     private MomentModel() {

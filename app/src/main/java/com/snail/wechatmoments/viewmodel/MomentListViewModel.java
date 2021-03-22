@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +19,15 @@ import androidx.databinding.ObservableList;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.donkingliang.imageselector.utils.ImageSelector;
+import com.scwang.smart.refresh.footer.ClassicsFooter;
+import com.scwang.smart.refresh.header.MaterialHeader;
+import com.scwang.smart.refresh.layout.api.RefreshFooter;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.snail.base.BaseActivity;
 import com.snail.base.BaseViewModel;
 import com.snail.common.Constants;
@@ -60,6 +65,7 @@ public class MomentListViewModel extends RefreshListViewModel implements View.On
         }
     };
 
+    //朋友圈动态条目
     public ObservableList<BaseViewModel> items = new ObservableArrayList<>();
     public OnItemBind<BaseViewModel> momentItemBind = (itemBinding, position, item) -> {
         setItemPosition(position);
@@ -78,16 +84,24 @@ public class MomentListViewModel extends RefreshListViewModel implements View.On
                 break;
         }
     };
-
-    public SwipeRefreshLayout.OnRefreshListener onRefreshListener = () -> {
-        refreshing.set(true);
+    private final List<MomentBean> mData = new ArrayList<>();
+    //下拉刷新
+    public OnRefreshListener onRefreshListener = refreshLayout -> {
+        mRefreshLayout = refreshLayout;
         start = end = 0;
+        items.clear();
         requestServer();
     };
-    private final List<MomentBean> mData = new ArrayList<>();
+    //上拉加载
+    public OnLoadMoreListener onLoadMoreListener = refreshLayout -> {
+        createViewModel();
+        refreshLayout.finishLoadMore();
+    };
+
     private Dialog mCameraDialog;
     //已选的图片
     private ArrayList<String> selected = new ArrayList<>();
+    private RefreshLayout mRefreshLayout;
     private int start, end;
 
     public MomentListViewModel(Context context) {
@@ -95,7 +109,6 @@ public class MomentListViewModel extends RefreshListViewModel implements View.On
         MomentDividerItemDecoration decoration = new MomentDividerItemDecoration(context, DividerItemDecoration.VERTICAL);
         decoration.setDrawable(ResourceUtil.getDrawable(R.drawable.item_divider));
         itemDecoration.set(decoration);
-        refreshing.set(true);
         requestServer();
     }
 
@@ -138,11 +151,12 @@ public class MomentListViewModel extends RefreshListViewModel implements View.On
         mCameraDialog.show();
     }
 
-    /**
-     * 加载更多
-     */
-    public void loadMore() {
-        createViewModel();
+    public RefreshHeader getRefreshHeader() {
+        return new MaterialHeader(context);
+    }
+
+    public RefreshFooter getRefreshFooter() {
+        return new ClassicsFooter(context);
     }
 
     @Override
@@ -171,9 +185,10 @@ public class MomentListViewModel extends RefreshListViewModel implements View.On
 
     @Override
     protected void requestServer() {
-        super.requestServer();
         MomentModel.getInstance().getTweets(object -> {
-            refreshing.set(false);
+            if (mRefreshLayout != null) {
+                mRefreshLayout.finishRefresh();
+            }
             if (object instanceof List) {
                 if (start == 0) {
                     mData.clear();
