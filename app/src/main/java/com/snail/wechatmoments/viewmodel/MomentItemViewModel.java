@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.snail.base.BaseViewModel;
 import com.snail.common.Constants;
+import com.snail.common.utils.ToastUtil;
 import com.snail.wechatmoments.BR;
 import com.snail.wechatmoments.R;
 import com.snail.wechatmoments.model.MomentBean;
@@ -111,8 +112,10 @@ public class MomentItemViewModel extends BaseViewModel {
      * 更多操作
      */
     public void optionMore() {
+        Constants.showToast();
     }
 
-    public void clickHead() {
+    public void viewProfile() {
+        ToastUtil.showMsg("查看个人信息");
     }
 }

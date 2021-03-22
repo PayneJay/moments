@@ -25,7 +25,7 @@
             android:id="@+id/iv_head"
             errorThumbnail="@{@drawable/icon_default_head}"
             imageUrlThumbnail="@{momentItemVM.headUrl}"
-            onClick="@{momentItemVM::clickHead}"
+            onClick="@{momentItemVM::viewProfile}"
             placeHolderThumbnail="@{@drawable/icon_default_head}"
             thumbnailCorners="@{6}"
             thumbnailType="@{BitmapTransform.ROUNDED}"
@@ -45,6 +45,7 @@
 
             <TextView
                 android:id="@+id/tv_name"
+                onClick="@{momentItemVM::viewProfile}"
                 text="@{momentItemVM.name}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -56,7 +57,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="名字" />
 
-            <TextView
+            <com.snail.common.widget.ExpandTextView
                 android:id="@+id/tv_content"
                 isGone="@{TextUtils.isEmpty(momentItemVM.contentDesc)}"
                 text="@{momentItemVM.contentDesc}"
@@ -67,8 +68,7 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/guide_line1"
-                app:layout_constraintTop_toBottomOf="@id/tv_name"
-                tools:text="我只要把额头遮住你们就看不到我的大脑门儿了，我只要把额头遮住你们就看不到我的大脑门儿了哈哈哈哈哈哈" />
+                app:layout_constraintTop_toBottomOf="@id/tv_name" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_images"
@@ -127,9 +127,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:background="@color/color_F9FAFE"
+                android:background="@drawable/shape_rectangle_color_f9fafe"
                 android:overScrollMode="never"
-                android:padding="8dp"
+                android:padding="6dp"
                 app:layoutManager=".viewmodel.MomentLinearLayoutManager"
                 app:layout_constraintStart_toEndOf="@id/guide_line1"
                 app:layout_constraintTop_toBottomOf="@id/tv_date" />

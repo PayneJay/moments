@@ -246,15 +246,12 @@ public class ViewBindings {
 
     @BindingAdapter("onLongClick")
     public static void setOnItemLongClick(View view, final OnLongClickListener listener) {
-        view.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                if (listener != null) {
-                    listener.onItemLongClick();
-                    return true;
-                }
-                return false;
+        view.setOnLongClickListener(view1 -> {
+            if (listener != null) {
+                listener.onItemLongClick();
+                return true;
             }
+            return false;
         });
     }
 

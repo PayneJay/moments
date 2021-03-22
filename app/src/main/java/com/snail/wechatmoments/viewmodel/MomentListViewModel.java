@@ -216,6 +216,8 @@ public class MomentListViewModel extends RefreshListViewModel implements View.On
             case R.id.btn_cancel:
                 break;
         }
-        mCameraDialog.dismiss();
+        if (mCameraDialog != null) {
+            mCameraDialog.dismiss();
+        }
     }
 }

@@ -1,10 +1,14 @@
 package com.snail.wechatmoments.view;
 
 import android.content.Intent;
+import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 
 import com.donkingliang.imageselector.utils.ImageSelector;
 import com.snail.base.BaseActivity;
 import com.snail.common.Constants;
+import com.snail.common.utils.CommonUtil;
 import com.snail.wechatmoments.BR;
 import com.snail.wechatmoments.R;
 import com.snail.wechatmoments.viewmodel.MomentListViewModel;
@@ -16,6 +20,12 @@ import java.util.ArrayList;
  */
 public class MomentActivity extends BaseActivity<MomentListViewModel> {
     private MomentListViewModel momentViewModel;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        CommonUtil.setSteep(this, true);
+    }
 
     @Override
     public void onDetachedFromWindow() {

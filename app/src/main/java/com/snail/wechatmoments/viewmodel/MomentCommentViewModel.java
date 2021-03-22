@@ -6,6 +6,7 @@ import androidx.databinding.ObservableField;
 
 import com.snail.base.BaseViewModel;
 import com.snail.common.Constants;
+import com.snail.common.utils.ToastUtil;
 
 /**
  * 评论ViewModel
@@ -23,7 +24,7 @@ public class MomentCommentViewModel extends BaseViewModel {
     }
 
     public void viewSender() {
-        Constants.showToast();
+        ToastUtil.showMsg("查看个人信息");
     }
 
 }
