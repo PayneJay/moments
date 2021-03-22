@@ -8,8 +8,10 @@
         android:id="@+id/contentText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:autoLink="all"
         android:text=""
         android:textColor="@color/color_232323"
+        android:textColorLink="@color/color_8290AF"
         android:textSize="14sp" />
 
     <TextView
