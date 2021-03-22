@@ -31,8 +31,8 @@ public class MomentNineGridLayout extends NineGridLayout {
         if (context != null) {
             Glide.with(context)
                     .load(url)
-                    .placeholder(R.drawable.pic_background)
-                    .error(R.drawable.pic_background)
+                    .placeholder(R.drawable.shape_rect_color_gray)
+                    .error(R.drawable.shape_rect_color_gray)
                     .centerCrop()
                     .into(imageView);
         }
